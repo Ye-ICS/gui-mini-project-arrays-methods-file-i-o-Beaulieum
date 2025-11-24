@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\beaulieum\\OneDrive - Limestone DSB\\ICS3U\\Lib\\javafx-sdk-21.0.9\\lib\\*.jar",
+    ]
+}
