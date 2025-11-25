@@ -5,9 +5,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.scene.text.Font;
 
 /**
  * Template JavaFX application.
@@ -20,47 +24,17 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         // Create components to add.
-        VBox contentBox = new VBox();
-        contentBox.setAlignment(Pos.CENTER);
-
-        Label promptLabel = new Label();
-        promptLabel.setText("Enter your thoughts");
-
-        TextField thoughtsBox = new TextField();
-        thoughtsBox.setMaxWidth(150);
-        thoughtsBox.setPromptText("type here");
+        HBox contentBox = new HBox();
+        int[] buttonAmount = new int[5]; 
+        for(int i = 0; i < buttonAmount.length; i++){
+            Button light = new Button("Button" + i);
+            contentBox.getChildren().add(light);
+            }
         
-        TextArea messageBox = new TextArea();
-        messageBox.setEditable(false);
 
-        Button submissionBtn = new Button();
-        submissionBtn.setText("Submit");
-
-        // Set up reactions (aka callbacks).
-        submissionBtn.setOnAction(event -> onSubmitThought(thoughtsBox, messageBox));
-
-        // Add components to the content box.
-        contentBox.getChildren().add(promptLabel);
-        contentBox.getChildren().add(thoughtsBox);
-        contentBox.getChildren().add(submissionBtn);
-        contentBox.getChildren().add(messageBox);
-
-        // Set up the window and display it.
         Scene scene = new Scene(contentBox, 300, 200);
         stage.setScene(scene);
-        stage.setTitle("Amazing App 2000");
+        stage.setTitle("Lights Out");
         stage.show();
-    }
-
-    /**
-     * Handle the submission of a thought.
-     * @param inputBox  The TextField where the user types their thought.
-     * @param outputBox The TextArea where the submitted thoughts are displayed.
-     */
-    void onSubmitThought(TextField inputBox, TextArea outputBox) {
-        String text = inputBox.getText();
-        inputBox.clear();
-        System.out.println("Interesting thought: " + text);
-        outputBox.appendText("Interesting thought: " + text + "\n");
     }
 }
