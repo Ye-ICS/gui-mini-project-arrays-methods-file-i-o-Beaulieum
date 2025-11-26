@@ -24,17 +24,33 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         // Create components to add.
-        HBox contentBox = new HBox();
-        int[] buttonAmount = new int[5]; 
+        HBox groot = new HBox();
+        groot.setStyle("-fx-background-color: lavender;-fx-spacing: 10;");
+        int[] buttonAmount = new int[10]; 
+        
+        Button[] lights = new Button[buttonAmount.length];
+        int[] buttonValue = {1,1,1,1,1};
         for(int i = 0; i < buttonAmount.length; i++){
-            Button light = new Button("Button" + i);
-            contentBox.getChildren().add(light);
+            Button light = new Button();
+            light.setPrefSize(40, 40);
+            groot.getChildren().add(light);
+            light.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 6");
+            lights[i] = light;
+            
+            light.setOnMousePressed(event ->{
+                
+            });
             }
         
 
-        Scene scene = new Scene(contentBox, 300, 200);
+        Scene scene = new Scene(groot, 480, 200);
         stage.setScene(scene);
         stage.setTitle("Lights Out");
         stage.show();
+
+     
+    }
+    private void changeButtons(Button[] lights) {
+
     }
 }
