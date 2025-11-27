@@ -26,31 +26,47 @@ public class App extends Application {
         // Create components to add.
         HBox groot = new HBox();
         groot.setStyle("-fx-background-color: lavender;-fx-spacing: 10;");
-        int[] buttonAmount = new int[10]; 
+        int[] buttonAmount = new int[6]; 
         
         Button[] lights = new Button[buttonAmount.length];
-        int[] buttonValue = {1,1,1,1,1};
+        int[] buttonValue = {0,1,1,1,1,1};
+        
         for(int i = 0; i < buttonAmount.length; i++){
             Button light = new Button();
             light.setPrefSize(40, 40);
             groot.getChildren().add(light);
             light.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 6");
             lights[i] = light;
-            
+            int index = i;
+            if(index == 0){
+                light.setOpacity(0);
+            }
             light.setOnMousePressed(event ->{
-                
+                changeButtons(lights, index, buttonValue);
             });
             }
         
 
-        Scene scene = new Scene(groot, 480, 200);
+        Scene scene = new Scene(groot, 480, 150);
         stage.setScene(scene);
         stage.setTitle("Lights Out");
         stage.show();
 
      
     }
-    private void changeButtons(Button[] lights) {
-
-    }
+    private void changeButtons(Button[] lights, int index, int[] buttonValue) {
+            for (int k = index-1 ; k <= index+1; k++){
+                if (k == 0){
+                    
+                }else if (buttonValue[k] == 1 && k>=0 && k<lights.length){
+                lights[k].setStyle("-fx-background-color: white; -fx-text-fill: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 6");   
+                buttonValue[k] = 0;
+                } else if (buttonValue[k] == 0 && k>=0 && k<lights.length){
+                lights[k].setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 6");   
+                buttonValue[k] = 1;    
+                }
+        
+            }
+     
+    }    
 }
