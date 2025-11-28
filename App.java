@@ -26,10 +26,11 @@ public class App extends Application {
         // Create components to add.
         HBox groot = new HBox();
         groot.setStyle("-fx-background-color: lavender;-fx-spacing: 10;");
-        int[] buttonAmount = new int[6]; 
+        int[] buttonAmount = new int[5]; 
         
         Button[] lights = new Button[buttonAmount.length];
-        int[] buttonValue = {0,1,1,1,1,1};
+        int[] buttonValue = new int[buttonAmount.length-1];
+        buttonValue = Logic.randomizer(buttonValue, buttonAmount); 
         
         for(int i = 0; i < buttonAmount.length; i++){
             Button light = new Button();
@@ -38,12 +39,13 @@ public class App extends Application {
             light.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 6");
             lights[i] = light;
             int index = i;
-            if(index == 0){
-                light.setOpacity(0);
-            }
-            light.setOnMousePressed(event ->{
+                light.setOnMousePressed(event ->{
                 changeButtons(lights, index, buttonValue);
             });
+            
+
+
+        
             }
         
 
@@ -54,19 +56,31 @@ public class App extends Application {
 
      
     }
+    /**
+     * Changes looks and button value for light buttons around specific index
+     * @param lights
+     * @param index
+     * @param buttonValue
+     */
     private void changeButtons(Button[] lights, int index, int[] buttonValue) {
+    
             for (int k = index-1 ; k <= index+1; k++){
-                if (k == 0){
-                    
-                }else if (buttonValue[k] == 1 && k>=0 && k<lights.length){
+                   
+                if ((k>=0 && k<lights.length) && buttonValue[k] == 1 ){
                 lights[k].setStyle("-fx-background-color: white; -fx-text-fill: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 6");   
                 buttonValue[k] = 0;
                 } else if (buttonValue[k] == 0 && k>=0 && k<lights.length){
                 lights[k].setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 6");   
                 buttonValue[k] = 1;    
                 }
+            
         
             }
      
-    }    
+    } 
+    private void checkAnswer(int[] buttonValue){
+        for(int i = 0;i< buttonValue.length; i++){
+            
+        }
+    }   
 }
