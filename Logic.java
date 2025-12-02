@@ -23,45 +23,62 @@ public class Logic {
             for(int k=0; k < lightAmount[0].length; k++){
 
                 lightValue[i][k] = ThreadLocalRandom.current().nextInt(0,difficulty+1);
-                System.out.print(lightValue[i][k]);               
+                System.out.print(lightValue[i][k] + " ");               
             }
-            System.out.println();
+            System.out.println("\n");
         }
         boolean gameOn = true;
          while(gameOn){
         
             int[] guess = new int[2]; 
-        System.out.println("Take a guess: (y x)"); 
+        System.out.print("choose button: 'y x': "); 
         guess[0] = sc.nextInt();
         guess[1] = sc.nextInt();
-        
-
-        
-        
+        if(guess[0] < 0 || guess[1] < 0|| guess[0] > lightAmount.length || guess[0] > lightAmount.length){
+            System.out.println("Invalid guess");
+            System.exit(0);
+        }
         
         onInput(lightValue, difficulty, guess);
         updatedGame(lightValue);
         }
     }
+    /**
+     * Changes appearence of buttons deppending on specific input
+     * @param lightValue
+     * @param difficulty
+     * @param guess
+     */
     static void onInput(int[][] lightValue, int difficulty, int[] guess){
 
-        int indexY = guess[0];
-        int indexX = guess[1];
+        int indexY = guess[0]-1;
+        int indexX = guess[1]-1;
             
-        lightValue[indexY][indexX] += 1 % (difficulty+1); 
-        lightValue[indexY+1][indexX] += 1 % (difficulty+1); 
-        lightValue[indexY-1][indexX] += 1 % (difficulty+1);
-        lightValue[indexY][indexX+1] += 1 % (difficulty+1);
-        lightValue[indexY][indexX-1] += 1 % (difficulty+1);
-
+        
+        lightValue[indexY][indexX] = (lightValue[indexY][indexX] + 1) % (difficulty+1); 
+        if(indexY < 4){ 
+        lightValue[indexY+1][indexX] = (lightValue[indexY+1][indexX] + 1) % (difficulty+1);
+        } 
+        if(indexY > 0){
+        lightValue[indexY-1][indexX] = (lightValue[indexY-1][indexX] + 1) % (difficulty+1);
+        }
+        if(indexX < 4){
+        lightValue[indexY][indexX+1] = (lightValue[indexY][indexX+1] + 1) % (difficulty+1);
+        }
+        if(indexX > 0){
+        lightValue[indexY][indexX-1] = (lightValue[indexY][indexX-1] + 1) % (difficulty+1);
+        }
     }
-
+    /**
+     * Updates map after each alteration
+     * @param lightValue
+     */
     static void updatedGame(int[][] lightValue){
         for(int i=0; i < lightValue[0].length; i++){
             for(int k=0; k < lightValue[0].length; k++){
-                System.out.print(lightValue[i][k]);
+                System.out.print(lightValue[i][k] + " ");
             }
-            System.out.println();
+            System.out.println("\n");
         }
     }
 
