@@ -7,6 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
@@ -24,29 +25,37 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         // Create components to add.
-        HBox groot = new HBox();
-        groot.setStyle("-fx-background-color: lavender;-fx-spacing: 10;");
-        int[] buttonAmount = new int[5]; 
+        VBox groot = new VBox();
+        GridPane lightHolder = new GridPane();
+        groot.setStyle("-fx-background-color: lavender;-fx-spacing: 10;"); 
+        int difficulty = 1;
         
-        Button[] lights = new Button[buttonAmount.length];
+        Button[][] buttonAmount = new Button[5][5];
         int[] buttonValue = new int[buttonAmount.length-1];
-        buttonValue = Logic.randomizer(buttonValue, buttonAmount); 
+        Logic.randomizeLights(buttonAmount, difficulty); 
         
+        for(int k = 0; k < buttonAmount.length; k++){
         for(int i = 0; i < buttonAmount.length; i++){
             Button light = new Button();
             light.setPrefSize(40, 40);
-            groot.getChildren().add(light);
-            light.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 6");
-            lights[i] = light;
+            lightHolder.add(light,k,i);
+            buttonAmount[k][i] = light;
             int index = i;
                 light.setOnMousePressed(event ->{
-                changeButtons(lights, index, buttonValue);
+                // changeButtons(buttonAmount, index, buttonValue);
             });
             
 
 
         
             }
+        }
+        
+        Button easyDifficuly = new Button();
+        // easyDifficuly.setOnMousePressed(event ->{
+        //         difficulty = 1;
+        // });
+        groot.getChildren().add(lightHolder);
         
 
         Scene scene = new Scene(groot, 480, 150);
@@ -62,20 +71,9 @@ public class App extends Application {
      * @param index
      * @param buttonValue
      */
-    private void changeButtons(Button[] lights, int index, int[] buttonValue) {
+    private void changeButtons(Button[][] buttonAmount, int index, int[][] buttonValue) {
     
-            for (int k = index-1 ; k <= index+1; k++){
-                   
-                if ((k>=0 && k<lights.length) && buttonValue[k] == 1 ){
-                lights[k].setStyle("-fx-background-color: white; -fx-text-fill: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 6");   
-                buttonValue[k] = 0;
-                } else if (buttonValue[k] == 0 && k>=0 && k<lights.length){
-                lights[k].setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 6");   
-                buttonValue[k] = 1;    
-                }
-            
-        
-            }
+
      
     } 
     private void checkAnswer(int[] buttonValue){

@@ -1,8 +1,12 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+import javafx.scene.control.Button;
+
 
 public class Logic {
-    public static void main(String[] args) {
+    static void logic(){
+    
     Scanner sc = new Scanner(System.in);
     
     System.out.println("Welcome to Lights out a game where you need to turn off all the lights\n\nThe lights coresponding to the one you pick will change whem it is changed");    
@@ -16,10 +20,10 @@ public class Logic {
     } else {
         System.out.println("invalid");
     }
-    int[][] lightAmount = new int[5][5];
-    int[][] lightValue = new int[lightAmount.length][lightAmount.length];
+    int[][] lightAmount = new int[5][5]; // 5x5 grid for lights
+    int[][] lightValue = new int[lightAmount.length][lightAmount.length]; // value of each light "on, off..."
     
-        for(int i=0; i < lightAmount[0].length; i++){
+        for(int i=0; i < lightAmount[0].length; i++){ // generates grid with random values
             for(int k=0; k < lightAmount[0].length; k++){
 
                 lightValue[i][k] = ThreadLocalRandom.current().nextInt(0,difficulty+1);
@@ -28,7 +32,8 @@ public class Logic {
             System.out.println("\n");
         }
         boolean gameOn = true;
-         while(gameOn){
+        checkIfComplete(lightValue); 
+        while(gameOn){
         
             int[] guess = new int[2]; 
         System.out.print("choose button: 'y x': "); 
@@ -41,6 +46,7 @@ public class Logic {
         
         onInput(lightValue, difficulty, guess);
         updatedGame(lightValue);
+        checkIfComplete(lightValue);
         }
     }
     /**
@@ -81,6 +87,30 @@ public class Logic {
             System.out.println("\n");
         }
     }
+
+    static boolean checkIfComplete(int[][] lightValue){
+       boolean gameOn;
+        if(Arrays.asList(lightValue).contains(1)){
+        gameOn = true;
+       } else if(Arrays.asList(lightValue).contains(2)){
+        gameOn = true;
+       } else {
+        gameOn = false;
+       }
+       return gameOn;
+    }
+    
+    static int[][] randomizeLights(Button[][] lightAmount, int difficulty){
+    int[][] lightValue = new int[lightAmount.length][lightAmount.length]; // value of each light "on, off..."     
+    for(int i=0; i < lightAmount[0].length; i++){ // generates grid with random values    
+        for(int k=0; k < lightAmount[0].length; k++){
+
+                lightValue[i][k] = ThreadLocalRandom.current().nextInt(0,difficulty+1);               
+            }
+        }
+        return lightValue;
+    }
+
 
 }
 
