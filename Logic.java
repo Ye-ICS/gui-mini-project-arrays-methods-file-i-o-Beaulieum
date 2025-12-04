@@ -20,7 +20,7 @@ public class Logic {
     } else {
         System.out.println("invalid");
     }
-    int[][] lightAmount = new int[5][5]; // 5x5 grid for lights
+    int[][] lightAmount = new int[6][6]; // 6x6 grid for lights
     int[][] lightValue = new int[lightAmount.length][lightAmount.length]; // value of each light "on, off..."
     
         for(int i=0; i < lightAmount[0].length; i++){ // generates grid with random values
@@ -57,18 +57,18 @@ public class Logic {
      */
     static void onInput(int[][] lightValue, int difficulty, int[] guess){
 
-        int indexY = guess[0]-1;
-        int indexX = guess[1]-1;
+        int indexY = guess[0];
+        int indexX = guess[1];
             
         
         lightValue[indexY][indexX] = (lightValue[indexY][indexX] + 1) % (difficulty+1); 
-        if(indexY < 4){ 
+        if(indexY < 5){ 
         lightValue[indexY+1][indexX] = (lightValue[indexY+1][indexX] + 1) % (difficulty+1);
         } 
         if(indexY > 0){
         lightValue[indexY-1][indexX] = (lightValue[indexY-1][indexX] + 1) % (difficulty+1);
         }
-        if(indexX < 4){
+        if(indexX < 5){
         lightValue[indexY][indexX+1] = (lightValue[indexY][indexX+1] + 1) % (difficulty+1);
         }
         if(indexX > 0){
@@ -88,11 +88,11 @@ public class Logic {
         }
     }
 
-    static boolean checkIfComplete(int[][] lightValue){
+    static boolean checkIfComplete(int[][] buttonValue){
        boolean gameOn;
-        if(Arrays.asList(lightValue).contains(1)){
+        if(Arrays.asList(buttonValue).contains(1)){
         gameOn = true;
-       } else if(Arrays.asList(lightValue).contains(2)){
+       } else if(Arrays.asList(buttonValue).contains(2)){
         gameOn = true;
        } else {
         gameOn = false;
