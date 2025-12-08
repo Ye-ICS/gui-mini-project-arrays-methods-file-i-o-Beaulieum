@@ -10,6 +10,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.FileNotFoundException;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
@@ -27,9 +30,9 @@ public class App extends Application {
         VBox groot = new VBox();
         StackPane gameScreen = new StackPane();
         GridPane lightHolder = new GridPane();
-        Label endLabel = new Label("Congratulations, you won.");
+        Label endLabel = new Label("Congratulations,\n        you won.");
         endLabel.setPrefSize(300, 200);
-        endLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        endLabel.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         endLabel.setAlignment(Pos.CENTER);
         Label startScreen = new Label("Lights out");
         startScreen.setPrefSize(300, 200);
@@ -62,10 +65,14 @@ public class App extends Application {
                     changeButtons(buttonAmount, buttonIndex, buttonValue);
 
                     boolean gameOn = Logic.checkIfComplete(buttonValue);
-                    if (gameOn = false) {
+                    if (gameOn == false) {
                         endLabel.setOpacity(1);
                         long endTime = System.currentTimeMillis();
-                        // Logic.readAndUpdateHighscore(startTime,endTime);
+                        try{
+                        Logic.readAndUpdateHighscore(startTime,endTime);
+                        } catch (FileNotFoundException fnfe){
+
+                        }
                     }
                 });
             }

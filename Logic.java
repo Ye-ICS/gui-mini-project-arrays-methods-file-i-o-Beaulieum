@@ -8,51 +8,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 public class Logic {
-    static void logic() {
-
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println(
-                "Welcome to Lights out a game where you need to turn off all the lights\n\nThe lights coresponding to the one you pick will change whem it is changed");
-        System.out.println("Would you like to play easy mode or hard mode? (Easy/Hard)");
-        String response = sc.nextLine();
-        int difficulty = 0;
-        if (response.equalsIgnoreCase("easy")) {
-            difficulty = 1;
-        } else if (response.equalsIgnoreCase("Hard")) {
-            difficulty = 2;
-        } else {
-            System.out.println("invalid");
-        }
-        int[][] lightAmount = new int[9][9]; // 6x6 grid for lights
-        int[][] lightValue = new int[lightAmount.length][lightAmount.length]; // value of each light "on, off..."
-
-        for (int i = 0; i < lightAmount[0].length; i++) { // generates grid with random values
-            for (int k = 0; k < lightAmount[0].length; k++) {
-
-                lightValue[i][k] = ThreadLocalRandom.current().nextInt(0, difficulty + 1);
-                System.out.print(lightValue[i][k] + " ");
-            }
-            System.out.println("\n");
-        }
-        boolean gameOn = true;
-        checkIfComplete(lightValue);
-        while (gameOn) {
-
-            int[] guess = new int[2];
-            System.out.print("choose button: 'y x': ");
-            guess[0] = sc.nextInt();
-            guess[1] = sc.nextInt();
-            if (guess[0] < 0 || guess[1] < 0 || guess[0] > lightAmount.length || guess[0] > lightAmount.length) {
-                System.out.println("Invalid guess");
-                System.exit(0);
-            }
-
-            onInput(lightValue, difficulty, guess);
-            updatedGame(lightValue);
-            checkIfComplete(lightValue);
-        }
-    }
+    
 
     /**
      * Changes appearence of buttons deppending on specific input
@@ -100,16 +56,21 @@ public class Logic {
      * @return
      */
     static boolean checkIfComplete(int[][] buttonValue) {
-        boolean gameOn = false;
+        boolean gameOn = true;
         
         for(int i = 0; i < buttonValue[0].length;i++){
-        if (!Arrays.asList(buttonValue[i]).contains(0)) {
-            gameOn = true;
+        if (!Arrays.asList(buttonValue[i]).contains(1)) {
+            gameOn = false;
         } 
     }
         return gameOn;
     }
-
+    /**
+     * Randomizes the value for each light
+     * @param lightAmount
+     * @param difficulty
+     * @return
+     */
     static int[][] randomizeLights(Button[][] lightAmount, int difficulty) {
         int[][] lightValue = new int[lightAmount.length][lightAmount.length]; // value of each light "on, off..."
         for (int i = 0; i < lightAmount[0].length; i++) { // generates grid with random values
@@ -120,6 +81,12 @@ public class Logic {
         }
         return lightValue;
     }
+    /**
+     * calculates the time it takes to finish the game and puts it into a file
+     * @param startTime
+     * @param endTime
+     * @throws FileNotFoundException
+     */
     static void readAndUpdateHighscore(long startTime, long endTime) throws FileNotFoundException{
         long finalTime = (endTime - startTime) / 1000;
         File highScore = new File("HighScore.txt");
@@ -134,7 +101,7 @@ public class Logic {
         while (fs.hasNext()){
             String score = fs.nextLine();
         }
-        
+    
     }
 
 }
