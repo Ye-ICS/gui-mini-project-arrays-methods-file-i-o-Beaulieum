@@ -65,7 +65,7 @@ public class App extends Application {
                     changeButtons(buttonAmount, buttonIndex, buttonValue);
 
                     boolean gameOn = Logic.checkIfComplete(buttonValue);
-                    if (gameOn == false) {
+                    if (gameOn) {
                         endLabel.setOpacity(1);
                         long endTime = System.currentTimeMillis();
                         try{

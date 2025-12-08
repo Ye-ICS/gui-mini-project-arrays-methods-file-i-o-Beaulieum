@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 public class Logic {
-    
 
     /**
      * Changes appearence of buttons deppending on specific input
@@ -50,23 +49,29 @@ public class Logic {
             System.out.println("\n");
         }
     }
+
     /**
      * CHecks if game is complete, returns boolean to stop game.
+     * 
      * @param buttonValue
      * @return
      */
     static boolean checkIfComplete(int[][] buttonValue) {
         boolean gameOn = true;
-        
-        for(int i = 0; i < buttonValue[0].length;i++){
-        if (!Arrays.asList(buttonValue[i]).contains(1)) {
-            gameOn = false;
-        } 
-    }
+
+        for (int i = 0; i < buttonValue[0].length; i++) {
+            for (int k = 0; k < buttonValue[0].length; k++) {
+                if (buttonValue[i][k] == 1) {
+                    gameOn = false;
+                }
+            }
+        }
         return gameOn;
     }
+
     /**
      * Randomizes the value for each light
+     * 
      * @param lightAmount
      * @param difficulty
      * @return
@@ -81,27 +86,31 @@ public class Logic {
         }
         return lightValue;
     }
+
     /**
      * calculates the time it takes to finish the game and puts it into a file
+     * 
      * @param startTime
      * @param endTime
      * @throws FileNotFoundException
      */
-    static void readAndUpdateHighscore(long startTime, long endTime) throws FileNotFoundException{
+    static void readAndUpdateHighscore(long startTime, long endTime) throws FileNotFoundException {
         long finalTime = (endTime - startTime) / 1000;
+        int newFinal = Math.round(finalTime);
         File highScore = new File("HighScore.txt");
-        try{
-        FileWriter addHighScore = new FileWriter("HighScore.txt");
-        addHighScore.write(finalTime + " Seconds");
-        addHighScore.close();
-        } catch (IOException ioe){
+        
+        try {
+            FileWriter addHighScore = new FileWriter("HighScore.txt");
+            addHighScore.write(newFinal + " Seconds");
+            addHighScore.close();
+        } catch (IOException ioe) {
 
         }
         Scanner fs = new Scanner(highScore);
-        while (fs.hasNext()){
+        while (fs.hasNext()) {
             String score = fs.nextLine();
         }
-    
+
     }
 
 }
