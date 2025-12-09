@@ -1,4 +1,4 @@
-import java.util.Arrays;
+
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import javafx.scene.control.Button;
@@ -86,7 +86,7 @@ public class Logic {
         }
         return lightValue;
     }
-
+    
     /**
      * calculates the time it takes to finish the game and puts it into a file
      * 
@@ -94,23 +94,35 @@ public class Logic {
      * @param endTime
      * @throws FileNotFoundException
      */
-    static void readAndUpdateHighscore(long startTime, long endTime) throws FileNotFoundException {
-        long finalTime = (endTime - startTime) / 1000;
+    static void readAndUpdateHighscore(final long startTime, long endTime) throws FileNotFoundException {
+        long finalTime = (endTime - startTime)/1000;
         int newFinal = Math.round(finalTime);
         File highScore = new File("HighScore.txt");
-        
+        Scanner fs = new Scanner(highScore);
+        long currentHS;
+        if (fs.hasNextLong()) {
+            currentHS = fs.nextLong();
+        } else {
+             currentHS = 999999999;
+        }
+        if (currentHS > finalTime)
         try {
             FileWriter addHighScore = new FileWriter("HighScore.txt");
-            addHighScore.write(newFinal + " Seconds");
+            addHighScore.write(String.valueOf(newFinal));
             addHighScore.close();
         } catch (IOException ioe) {
 
         }
-        Scanner fs = new Scanner(highScore);
-        while (fs.hasNext()) {
-            String score = fs.nextLine();
-        }
 
+    }
+    static String returnHighscore(long startTime, long endTime){
+        long highScore = (endTime - startTime) / 1000;
+        highScore = Math.round(highScore);
+        long Minutes = highScore / 60;
+        long Seconds = highScore % 60;
+
+        String userHS = String.valueOf(Minutes) + ":" + String.valueOf(Seconds);
+        return userHS;
     }
 
 }
