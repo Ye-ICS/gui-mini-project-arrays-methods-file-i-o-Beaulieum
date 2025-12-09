@@ -27,25 +27,25 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws FileNotFoundException { 
         // Create components to add.
-        VBox groot = new VBox();
+        VBox groot = new VBox(); // main component
         groot.setStyle("-fx-background-color: lavender;");
         
         StackPane gameScreen = new StackPane();
 
         GridPane lightHolder = new GridPane();
 
-        Label endLabel = new Label();
+        Label endLabel = new Label(); // label for the end of the game tells user score
         endLabel.setPrefSize(300, 200);
         endLabel.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         endLabel.setAlignment(Pos.CENTER);
         endLabel.setOpacity(0);
 
-        Label startScreen = new Label("Lights out");
+        Label startScreen = new Label("Lights out"); // title screen is behind the grid
         startScreen.setPrefSize(300, 200);
         startScreen.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         startScreen.setAlignment(Pos.CENTER);
 
-        Label highScore = new Label();
+        Label highScore = new Label(); // highscore updates after new highscore and game is closed
         highScore.setAlignment(Pos.CENTER);
         File score = new File("HighScore.txt");
         Scanner fs = new Scanner(score);
@@ -60,9 +60,9 @@ public class App extends Application {
         int difficulty = 1;
 
         Button[][] buttonAmount = new Button[6][6];
-        int[][] buttonValue = Logic.randomizeLights(buttonAmount, difficulty);
+        int[][] buttonValue = Logic.randomizeLights(buttonAmount, difficulty); // value of each button in a 2d button array
         
-        for (int k = 0; k < buttonAmount.length; k++) {
+        for (int k = 0; k < buttonAmount.length; k++) { // creates a 6x6 button grid
             for (int i = 0; i < buttonAmount.length; i++) {
                 Button light = new Button();
                 light.setPrefSize(40, 40);
@@ -75,7 +75,7 @@ public class App extends Application {
                 buttonIndex[0] = k;
                 buttonIndex[1] = i;
                 
-                light.setOnMousePressed(event -> {
+                light.setOnMousePressed(event -> { // apon a button pressed initializes game and updates buttons
                     startScreen.setOpacity(0);
                     
                     if (startTime == 0){

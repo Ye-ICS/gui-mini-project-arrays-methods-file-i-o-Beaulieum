@@ -86,7 +86,7 @@ public class Logic {
         }
         return lightValue;
     }
-    
+
     /**
      * calculates the time it takes to finish the game and puts it into a file
      * 
@@ -103,9 +103,9 @@ public class Logic {
         if (fs.hasNextLong()) {
             currentHS = fs.nextLong();
         } else {
-             currentHS = 999999999;
+             currentHS = 999999999; // if no highscore it is compared to an insanely large number
         }
-        if (currentHS > finalTime)
+        if (currentHS > finalTime) {
         try {
             FileWriter addHighScore = new FileWriter("HighScore.txt");
             addHighScore.write(String.valueOf(newFinal));
@@ -113,8 +113,15 @@ public class Logic {
         } catch (IOException ioe) {
 
         }
+    }
 
     }
+    /**
+     * returns user highscore after game completion
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     static String returnHighscore(long startTime, long endTime){
         long highScore = (endTime - startTime) / 1000;
         highScore = Math.round(highScore);
